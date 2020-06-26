@@ -67,7 +67,7 @@ type WingIzabraniElement struct {
 	Kolicina      int
 	SumaCena      float64
 	Element       WingVrstaRadova
-	DugmeBrisanje *gel.Button
+	DugmeBrisanje *gel.Clickable
 }
 
 type WingCalGrupaRadova struct {
