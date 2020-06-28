@@ -2,7 +2,9 @@ package gelook
 
 import (
 	"gioui.org/layout"
+	"gioui.org/unit"
 	"gioui.org/widget"
+	"gioui.org/widget/material"
 	"github.com/gioapp/gel"
 )
 
@@ -16,14 +18,14 @@ type ScrollBar struct {
 	BorderRadius [4]float32
 	OperateValue interface{}
 	slider       *ScrollBarSlider
-	//up           IconButton
-	//down         IconButton
-	container WingUIcontainer
+	up           material.IconButtonStyle
+	down         material.IconButtonStyle
+	container    WingUIcontainer
 }
 
 type ScrollBarSlider struct {
 	container WingUIcontainer
-	//Icon      DuoUIicon
+	Icon      material.IconButtonStyle
 }
 
 func (t *WingUItheme) ScrollBar(leftMargin int) *ScrollBar {
@@ -36,61 +38,63 @@ func (t *WingUItheme) ScrollBar(leftMargin int) *ScrollBar {
 		ColorBg:      t.Colors["DarkGrayII"],
 		BorderRadius: [4]float32{},
 		slider:       slider,
-		//up:           t.IconButton(t.Icons["Up"]),
-		//down:         t.IconButton(t.Icons["Down"]),
-		container: t.WingUIcontainer(0, t.Colors["Light"]),
+		up:           material.IconButton(t.T, widgetButtonUp, t.Icons["Up"]),
+		down:         material.IconButton(t.T, widgetButtonDown, t.Icons["Down"]),
+		container:    t.WingUIcontainer(0, t.Colors["Light"]),
 	}
 	scrollbar.container.PaddingLeft = leftMargin
 	return scrollbar
 }
 
-func (p *WingUIpanel) ScrollBarLayout(panel *gel.Panel) func(gtx C) D {
-	return func(gtx C) D {
-		//p.ScrollBar.container.Layout(layout.Center, func(gtx C) D){
-		//	return func(gtx C) D {
-		//		return layout.Flex{
-		//			Axis: layout.Vertical,
-		//		}.Layout(*gtx,
-		//			layout.Rigid(func(gtx C) D {
-		//				for widgetButtonUp.Clicked() {
-		//					if panel.PanelContentLayout.Position.First > 0 {
-		//						panel.PanelContentLayout.Position.First = panel.PanelContentLayout.Position.First - 1
-		//						panel.PanelContentLayout.Position.Offset = 0
-		//					}
-		//				}
-		//				//p.ScrollBar.up.Padding = unit.Dp(0)
-		//				//p.ScrollBar.up.Size = unit.Dp(16)
-		//				//p.ScrollBar.up.Color = HexARGB("ffcfcfcf")
-		//				//p.ScrollBar.up.Layout(gtx, widgetButtonUp)
-		//			}),
-		//			layout.Flexed(1, func(gtx C) D {
-		//				return p.bodyLayout(panel)
-		//			}),
-		//			layout.Rigid(func(gtx C) D {
-		//				for widgetButtonDown.Clicked() {
-		//					if panel.PanelContentLayout.Position.BeforeEnd {
-		//						panel.PanelContentLayout.Position.First = panel.PanelContentLayout.Position.First + 1
-		//						panel.PanelContentLayout.Position.Offset = 0
-		//					}
-		//				}
-		//				//p.ScrollBar.down.Padding = unit.Dp(0)
-		//				//p.ScrollBar.down.Size = unit.Dp(16)
-		//				//p.ScrollBar.down.Color = HexARGB("ffcfcfcf")
-		//				//p.ScrollBar.down.Layout(g, widgetButtonDown)
-		//			}),
-		//		)
-		//	}
-		//}
-		var d D
-		return d
-	}
+func (p *WingUIpanel) ScrollBarLayout(g layout.Context, panel *gel.Panel) layout.Dimensions {
+	return p.ScrollBar.container.Layout(g, layout.Center, func(gtx C) D {
+		return layout.Flex{
+			Axis: layout.Vertical,
+		}.Layout(gtx,
+			layout.Rigid(func(gtx C) D {
+				for widgetButtonUp.Clicked() {
+					if panel.PanelContentLayout.Position.First > 0 {
+						panel.PanelContentLayout.Position.First = panel.PanelContentLayout.Position.First - 1
+						panel.PanelContentLayout.Position.Offset = 0
+					}
+				}
+				p.ScrollBar.up.Inset = layout.Inset{
+					Top:    unit.Dp(16),
+					Right:  unit.Dp(16),
+					Bottom: unit.Dp(16),
+					Left:   unit.Dp(16),
+				}
+				p.ScrollBar.up.Size = unit.Dp(16)
+				p.ScrollBar.up.Color = HexARGB("ffcfcfcf")
+				return p.ScrollBar.up.Layout(gtx)
+			}),
+			layout.Flexed(1, p.bodyLayout(gtx, panel)),
+			layout.Rigid(func(gtx C) D {
+				for widgetButtonDown.Clicked() {
+					if panel.PanelContentLayout.Position.BeforeEnd {
+						panel.PanelContentLayout.Position.First = panel.PanelContentLayout.Position.First + 1
+						panel.PanelContentLayout.Position.Offset = 0
+					}
+				}
+				p.ScrollBar.down.Inset = layout.Inset{
+					Top:    unit.Dp(16),
+					Right:  unit.Dp(16),
+					Bottom: unit.Dp(16),
+					Left:   unit.Dp(16),
+				}
+				p.ScrollBar.down.Size = unit.Dp(16)
+				p.ScrollBar.down.Color = HexARGB("ffcfcfcf")
+				return p.ScrollBar.down.Layout(g)
+			}),
+		)
+	})
 }
-func (p *WingUIpanel) bodyLayout(g *layout.Context,
-	panel *gel.Panel) func(gtx C) D {
+
+func (p *WingUIpanel) bodyLayout(g layout.Context, panel *gel.Panel) func(gtx C) layout.Dimensions {
 	return func(gtx C) D {
 		return layout.Flex{
 			Axis: layout.Vertical,
-		}.Layout(*g,
+		}.Layout(g,
 			layout.Rigid(func(gtx C) D {
 				//cs := g.Constraints
 				//pointer.Rect(

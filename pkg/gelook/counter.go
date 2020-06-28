@@ -40,7 +40,7 @@ func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) W
 	}
 }
 
-func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, value string) func(gtx C) D {
+func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, value string) func(gtx C) layout.Dimensions {
 	return func(gtx C) D {
 		cc.CounterInput.SetText(value)
 		//hmin := g.Constraints.Min.X

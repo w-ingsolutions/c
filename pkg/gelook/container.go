@@ -49,13 +49,13 @@ func (t *WingUItheme) WingUIcontainer(padding int, background string) WingUIcont
 	}
 }
 
-func (w WingUIcontainer) Layout(gtx *layout.Context, direction layout.Direction, itemContent func(gtx C) D) D {
-	hmin := gtx.Constraints.Min.X
-	vmin := gtx.Constraints.Min.Y
+func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, itemContent func(gtx C) D) layout.Dimensions {
+	hmin := g.Constraints.Min.X
+	vmin := g.Constraints.Min.Y
 	if w.FullWidth {
-		hmin = gtx.Constraints.Max.Y
+		hmin = g.Constraints.Max.Y
 	}
-	return layout.Stack{Alignment: layout.W}.Layout(*gtx,
+	return layout.Stack{Alignment: layout.W}.Layout(g,
 		layout.Expanded(func(gtx C) D {
 			rr := float32(gtx.Px(unit.Dp(float32(w.CornerRadius))))
 			clip.Rect{
