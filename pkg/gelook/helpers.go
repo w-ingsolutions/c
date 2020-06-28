@@ -12,14 +12,14 @@ import (
 	"gioui.org/unit"
 )
 
-func DuoUIdrawRectangle(g *layout.Context, w, h int, color string, borderRadius [4]float32, padding [4]float32) {
+func DuoUIdrawRectangle(g layout.Context, w, h int, color string, borderRadius [4]float32, padding [4]float32) D {
 	in := layout.Inset{
 		Top:    unit.Dp(padding[0]),
 		Right:  unit.Dp(padding[1]),
 		Bottom: unit.Dp(padding[2]),
 		Left:   unit.Dp(padding[3]),
 	}
-	in.Layout(*g, func(gtx C) D {
+	return in.Layout(g, func(gtx C) D {
 		var dd D
 		square := f32.Rectangle{
 			Max: f32.Point{
@@ -41,7 +41,7 @@ func HexARGB(s string) (c color.RGBA) {
 	return
 }
 
-func WingUIfill(gtx *layout.Context, col string) {
+func WingUIfill(gtx layout.Context, col string) {
 	cs := gtx.Constraints
 	d := image.Point{X: cs.Min.X, Y: cs.Min.Y}
 	dr := f32.Rectangle{
@@ -52,21 +52,15 @@ func WingUIfill(gtx *layout.Context, col string) {
 	//gtx.Dimensions = layout.Dimensions{Size: d}
 }
 
-func (t *WingUItheme) WingUIline(g *layout.Context, verticalPadding, horizontalPadding float32, size int, color string) func(gtx C) D {
-	return func(gtx C) D {
-		var dd D
-		layout.Inset{
-			Top:    unit.Dp(verticalPadding),
-			Right:  unit.Dp(horizontalPadding),
-			Bottom: unit.Dp(verticalPadding),
-			Left:   unit.Dp(horizontalPadding),
-		}.Layout(*g, func(gtx C) D {
-			var ddd D
-			DuoUIdrawRectangle(g, g.Constraints.Max.X, size, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
-			return ddd
-		})
-		return dd
-	}
+func (t *WingUItheme) WingUIline(g layout.Context, verticalPadding, horizontalPadding float32, size int, color string) D {
+	return layout.Inset{
+		Top:    unit.Dp(verticalPadding),
+		Right:  unit.Dp(horizontalPadding),
+		Bottom: unit.Dp(verticalPadding),
+		Left:   unit.Dp(horizontalPadding),
+	}.Layout(g, func(gtx C) D {
+		return DuoUIdrawRectangle(g, g.Constraints.Max.X, size, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
+	})
 }
 
 func toPointF(p image.Point) f32.Point {

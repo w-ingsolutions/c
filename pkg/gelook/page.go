@@ -62,29 +62,25 @@ func (t *WingUItheme) WingUIpage(p WingUIpage) *WingUIpage {
 	}
 }
 
-func (p WingUIpage) Layout(g *layout.Context) {
+func (p WingUIpage) Layout(g layout.Context) {
 	layout.Flex{
 		Axis: layout.Vertical,
-	}.Layout(*g,
+	}.Layout(g,
 		layout.Rigid(pageElementLayout(g, layout.N, p.HeaderBgColor, p.HeaderPadding, p.Header)),
 		layout.Flexed(1, func(gtx C) D {
-			var dd D
 			WingUIfill(g, p.BorderColor)
-			layout.UniformInset(unit.Dp(p.Border)).Layout(*g, pageElementLayout(g, layout.N, p.BodyBgColor, p.BodyPadding, p.Body))
-			return dd
+			return layout.UniformInset(unit.Dp(p.Border)).Layout(g, pageElementLayout(g, layout.N, p.BodyBgColor, p.BodyPadding, p.Body))
 		}),
 		layout.Rigid(pageElementLayout(g, layout.N, p.FooterBgColor, p.FooterPadding, p.Footer)),
 	)
 }
 
-func pageElementLayout(g *layout.Context, direction layout.Direction, background string, padding float32, elementContent func(gtx C) D) func(gtx C) D {
+func pageElementLayout(g layout.Context, direction layout.Direction, background string, padding float32, elementContent func(gtx C) D) func(gtx C) D {
 	return func(gtx C) D {
-		var dd D
 		hmin := g.Constraints.Max.X
 		vmin := g.Constraints.Min.Y
-		layout.Stack{Alignment: layout.W}.Layout(*g,
+		return layout.Stack{Alignment: layout.W}.Layout(g,
 			layout.Expanded(func(gtx C) D {
-				var ddd D
 				rr := float32(g.Px(unit.Dp(0)))
 				clip.Rect{
 					Rect: f32.Rectangle{Max: f32.Point{
@@ -93,32 +89,26 @@ func pageElementLayout(g *layout.Context, direction layout.Direction, background
 					}},
 					NE: rr, NW: rr, SE: rr, SW: rr,
 				}.Op(gtx.Ops).Add(gtx.Ops)
-				fill(gtx, HexARGB(background))
+				var dd D
 				pointer.Rect(image.Rectangle{Max: dd.Size}).Add(gtx.Ops)
-				return ddd
+				fill(gtx, HexARGB(background))
+				return dd
 			}),
 			layout.Stacked(func(gtx C) D {
-				var ddd D
 				g.Constraints.Min.X = hmin
 				g.Constraints.Min.Y = vmin
-				direction.Layout(gtx, func(gtx C) D {
-					var dddd D
-					layout.Flex{}.Layout(gtx,
+				return direction.Layout(gtx, func(gtx C) D {
+					return layout.Flex{}.Layout(gtx,
 						layout.Flexed(1, func(gtx C) D {
-							var ddddd D
-							layout.Inset{
+							return layout.Inset{
 								Top:    unit.Dp(padding),
 								Right:  unit.Dp(padding),
 								Bottom: unit.Dp(padding),
 								Left:   unit.Dp(padding),
 							}.Layout(gtx, elementContent)
-							return ddddd
 						}))
-					return dddd
 				})
-				return ddd
 			}),
 		)
-		return dd
 	}
 }
