@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/gioapp/gel"
+	"gioui.org/widget"
 	"net"
 )
 
@@ -67,7 +67,7 @@ type WingIzabraniElement struct {
 	Kolicina      int
 	SumaCena      float64
 	Element       WingVrstaRadova
-	DugmeBrisanje *gel.Clickable
+	DugmeBrisanje *widget.Clickable
 }
 
 type WingCalGrupaRadova struct {
@@ -89,15 +89,15 @@ type WingCalEcommand struct {
 	Data     interface{} `json:"data"`
 }
 type EditabilnaPoljaVrsteRadova struct {
-	Id        *gel.Editor
-	Naziv     *gel.Editor
-	Opis      *gel.Editor
-	Obracun   *gel.Editor
-	Jedinica  *gel.Editor
-	Cena      *gel.Editor
-	Slug      *gel.Editor
-	Omogucen  *gel.CheckBox
-	Materijal map[int]*gel.Editor
+	Id        *widget.Editor
+	Naziv     *widget.Editor
+	Opis      *widget.Editor
+	Obracun   *widget.Editor
+	Jedinica  *widget.Editor
+	Cena      *widget.Editor
+	Slug      *widget.Editor
+	Omogucen  *widget.Bool
+	Materijal map[int]*widget.Editor
 }
 
 type ElementMenu struct {

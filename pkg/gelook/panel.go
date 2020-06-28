@@ -11,39 +11,47 @@ type DuoUIpanel struct {
 	container   DuoUIcontainer
 }
 
-func (t *DuoUItheme) DuoUIpanel() DuoUIpanel {
+func (t *WingUItheme) DuoUIpanel() DuoUIpanel {
 	return DuoUIpanel{
 		container: t.DuoUIcontainer(0, t.Colors["Light"]),
 	}
 }
-func (p *DuoUIpanel) panelLayout(gtx *layout.Context, panel *gel.Panel, row func(i int, in interface{})) func() {
-	return func() {
+func (p *DuoUIpanel) panelLayout(g *layout.Context, panel *gel.Panel, row func(i int, in interface{})) func(gtx C) D {
+	return func(gtx C) D {
+		var dd D
 		visibleObjectsNumber := 0
-		panel.PanelContentLayout.Layout(gtx, panel.PanelObjectsNumber, func(i int) {
+		panel.PanelContentLayout.Layout(*g, panel.PanelObjectsNumber, func(gtx C, i int) D {
+			var ddd D
 			row(i, p.PanelObject)
 			visibleObjectsNumber = visibleObjectsNumber + 1
 			panel.VisibleObjectsNumber = visibleObjectsNumber
+			return ddd
 		})
+		return dd
 	}
 }
 
-func (p *DuoUIpanel) Layout(gtx *layout.Context, panel *gel.Panel, row func(i int, in interface{})) {
-	p.container.Layout(gtx, layout.NW, func() {
+func (p *DuoUIpanel) Layout(g *layout.Context, panel *gel.Panel, row func(i int, in interface{})) {
+	p.container.Layout(g, layout.NW, func(gtx C) D {
+		var dd D
 		layout.Flex{
 			Axis:    layout.Horizontal,
 			Spacing: layout.SpaceBetween,
-		}.Layout(gtx,
-			layout.Flexed(1, p.panelLayout(gtx, panel, row)),
-			layout.Rigid(func() {
+		}.Layout(*g,
+			layout.Flexed(1, p.panelLayout(g, panel, row)),
+			layout.Rigid(func(gtx C) D {
+				var dd D
 				if panel.PanelObjectsNumber > panel.VisibleObjectsNumber {
-					p.ScrollBarLayout(gtx, panel)
+					p.ScrollBarLayout(g, panel)
 				}
+				return dd
 			}),
 		)
 		//fmt.Println("scrollUnit:", panel.ScrollUnit)
 		//fmt.Println("ScrollBar.Slider.Height:", panel.ScrollBar.Slider.Height)
 		//fmt.Println("PanelObjectsNumber:", panel.PanelObjectsNumber)
 
-		panel.Layout(gtx)
+		panel.Layout(g)
+		return dd
 	})
 }

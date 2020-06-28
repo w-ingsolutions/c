@@ -2,7 +2,7 @@
 
 package gelook
 
-func NewDuoUIcolors() (c map[string]string) {
+func NewWingUIcolors() (c map[string]string) {
 	c = map[string]string{
 		"black":                 "ff000000",
 		"light-black":           "ff222222",
