@@ -5,18 +5,18 @@ import (
 	"github.com/gioapp/gel"
 )
 
-type DuoUIpanel struct {
+type WingUIpanel struct {
 	PanelObject interface{}
 	ScrollBar   *ScrollBar
-	container   DuoUIcontainer
+	container   WingUIcontainer
 }
 
-func (t *WingUItheme) DuoUIpanel() DuoUIpanel {
-	return DuoUIpanel{
-		container: t.DuoUIcontainer(0, t.Colors["Light"]),
+func (t *WingUItheme) WingUIpanel() WingUIpanel {
+	return WingUIpanel{
+		container: t.WingUIcontainer(0, t.Colors["Light"]),
 	}
 }
-func (p *DuoUIpanel) panelLayout(g *layout.Context, panel *gel.Panel, row func(i int, in interface{})) func(gtx C) D {
+func (p *WingUIpanel) panelLayout(g *layout.Context, panel *gel.Panel, row func(i int, in interface{})) func(gtx C) D {
 	return func(gtx C) D {
 		var dd D
 		visibleObjectsNumber := 0
@@ -31,27 +31,27 @@ func (p *DuoUIpanel) panelLayout(g *layout.Context, panel *gel.Panel, row func(i
 	}
 }
 
-func (p *DuoUIpanel) Layout(g *layout.Context, panel *gel.Panel, row func(i int, in interface{})) {
-	p.container.Layout(g, layout.NW, func(gtx C) D {
-		var dd D
-		layout.Flex{
-			Axis:    layout.Horizontal,
-			Spacing: layout.SpaceBetween,
-		}.Layout(*g,
-			layout.Flexed(1, p.panelLayout(g, panel, row)),
-			layout.Rigid(func(gtx C) D {
-				var dd D
-				if panel.PanelObjectsNumber > panel.VisibleObjectsNumber {
-					p.ScrollBarLayout(g, panel)
-				}
-				return dd
-			}),
-		)
-		//fmt.Println("scrollUnit:", panel.ScrollUnit)
-		//fmt.Println("ScrollBar.Slider.Height:", panel.ScrollBar.Slider.Height)
-		//fmt.Println("PanelObjectsNumber:", panel.PanelObjectsNumber)
+func (p *WingUIpanel) Layout(g layout.Context, panel *gel.Panel, row func(i int, in interface{})) func(gtx C) D {
+	return func(gtx C) D {
+		return p.container.Layout(&g, layout.NW, func(gtx C) D {
+			return layout.Flex{
+				Axis:    layout.Horizontal,
+				Spacing: layout.SpaceBetween,
+			}.Layout(g,
+				layout.Flexed(1, p.panelLayout(&g, panel, row)),
+				layout.Rigid(func(gtx C) D {
+					var d D
+					if panel.PanelObjectsNumber > panel.VisibleObjectsNumber {
+						//return	p.ScrollBarLayout(g, panel)
+					}
+					return d
+				}),
+			)
+			//fmt.Println("scrollUnit:", panel.ScrollUnit)
+			//fmt.Println("ScrollBar.Slider.Height:", panel.ScrollBar.Slider.Height)
+			//fmt.Println("PanelObjectsNumber:", panel.PanelObjectsNumber)
 
-		panel.Layout(g)
-		return dd
-	})
+			//panel.Layout(&g)
+		})
+	}
 }

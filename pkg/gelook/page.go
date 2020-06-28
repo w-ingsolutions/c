@@ -13,7 +13,7 @@ import (
 	"gioui.org/unit"
 )
 
-type DuoUIpage struct {
+type WingUIpage struct {
 	Title   string
 	TxColor string
 	// Font          text.Font
@@ -39,8 +39,8 @@ type DuoUIpage struct {
 	// footer
 }
 
-func (t *WingUItheme) DuoUIpage(p DuoUIpage) *DuoUIpage {
-	return &DuoUIpage{
+func (t *WingUItheme) WingUIpage(p WingUIpage) *WingUIpage {
+	return &WingUIpage{
 		Title: p.Title,
 		// Font: text.Font{
 		// Size: t.TextSize.Scale(14.0 / 16.0),
@@ -62,14 +62,14 @@ func (t *WingUItheme) DuoUIpage(p DuoUIpage) *DuoUIpage {
 	}
 }
 
-func (p DuoUIpage) Layout(g *layout.Context) {
+func (p WingUIpage) Layout(g *layout.Context) {
 	layout.Flex{
 		Axis: layout.Vertical,
 	}.Layout(*g,
 		layout.Rigid(pageElementLayout(g, layout.N, p.HeaderBgColor, p.HeaderPadding, p.Header)),
 		layout.Flexed(1, func(gtx C) D {
 			var dd D
-			DuoUIfill(g, p.BorderColor)
+			WingUIfill(g, p.BorderColor)
 			layout.UniformInset(unit.Dp(p.Border)).Layout(*g, pageElementLayout(g, layout.N, p.BodyBgColor, p.BodyPadding, p.Body))
 			return dd
 		}),

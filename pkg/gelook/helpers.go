@@ -41,7 +41,7 @@ func HexARGB(s string) (c color.RGBA) {
 	return
 }
 
-func DuoUIfill(gtx *layout.Context, col string) {
+func WingUIfill(gtx *layout.Context, col string) {
 	cs := gtx.Constraints
 	d := image.Point{X: cs.Min.X, Y: cs.Min.Y}
 	dr := f32.Rectangle{
@@ -52,7 +52,7 @@ func DuoUIfill(gtx *layout.Context, col string) {
 	//gtx.Dimensions = layout.Dimensions{Size: d}
 }
 
-func (t *WingUItheme) DuoUIline(g *layout.Context, verticalPadding, horizontalPadding float32, size int, color string) func(gtx C) D {
+func (t *WingUItheme) WingUIline(g *layout.Context, verticalPadding, horizontalPadding float32, size int, color string) func(gtx C) D {
 	return func(gtx C) D {
 		var dd D
 		layout.Inset{

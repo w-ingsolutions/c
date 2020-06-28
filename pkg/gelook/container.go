@@ -33,7 +33,7 @@ type WingUIcontainer struct {
 	hover         bool
 }
 
-func (t *WingUItheme) DuoUIcontainer(padding int, background string) WingUIcontainer {
+func (t *WingUItheme) WingUIcontainer(padding int, background string) WingUIcontainer {
 	return WingUIcontainer{
 		Font: text.Font{
 			Typeface: t.Fonts["Primary"],
@@ -49,16 +49,17 @@ func (t *WingUItheme) DuoUIcontainer(padding int, background string) WingUIconta
 	}
 }
 
-func (d WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, itemContent func(gtx C) D) {
+func (w WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, itemContent func(gtx C) D) D {
+	var d D
 	hmin := g.Constraints.Min.X
 	vmin := g.Constraints.Min.Y
-	if d.FullWidth {
+	if w.FullWidth {
 		hmin = g.Constraints.Max.Y
 	}
-	layout.Stack{Alignment: layout.W}.Layout(*g,
+	return layout.Stack{Alignment: layout.W}.Layout(*g,
 		layout.Expanded(func(gtx C) D {
 			var dd D
-			rr := float32(g.Px(unit.Dp(float32(d.CornerRadius))))
+			rr := float32(g.Px(unit.Dp(float32(w.CornerRadius))))
 			clip.Rect{
 				Rect: f32.Rectangle{Max: f32.Point{
 					X: float32(g.Constraints.Min.X),
@@ -66,7 +67,7 @@ func (d WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, i
 				}},
 				NE: rr, NW: rr, SE: rr, SW: rr,
 			}.Op(g.Ops).Add(g.Ops)
-			fill(*g, HexARGB(d.Background))
+			fill(*g, HexARGB(w.Background))
 			//pointer.Rect(image.Rectangle{Max: g.Dimensions.Size}).Add(g.Ops)
 			return dd
 		}),
@@ -77,10 +78,10 @@ func (d WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, i
 			direction.Layout(gtx, func(gtx C) D {
 				var ddd D
 				layout.Inset{
-					Top:    unit.Dp(float32(d.PaddingTop)),
-					Right:  unit.Dp(float32(d.PaddingRight)),
-					Bottom: unit.Dp(float32(d.PaddingBottom)),
-					Left:   unit.Dp(float32(d.PaddingLeft)),
+					Top:    unit.Dp(float32(w.PaddingTop)),
+					Right:  unit.Dp(float32(w.PaddingRight)),
+					Bottom: unit.Dp(float32(w.PaddingBottom)),
+					Left:   unit.Dp(float32(w.PaddingLeft)),
 				}.Layout(gtx, itemContent)
 				return ddd
 			})
@@ -88,4 +89,5 @@ func (d WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, i
 
 		}),
 	)
+	return d
 }

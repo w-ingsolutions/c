@@ -1,16 +1,20 @@
 package gelook
 
 import (
+	"gioui.org/f32"
+	"gioui.org/layout"
+	"gioui.org/op/clip"
 	"gioui.org/text"
 	"gioui.org/unit"
 	"gioui.org/widget/material"
+	"github.com/gioapp/gel"
 )
 
-type DuoUIcounter struct {
-	increase material.ButtonStyle
-	decrease material.ButtonStyle
-	reset    material.ButtonStyle
-	//input        DuoUIeditor
+type WingUIcounter struct {
+	increase     material.IconButtonStyle
+	decrease     material.IconButtonStyle
+	reset        material.IconButtonStyle
+	input        material.EditorStyle
 	pageFunction func()
 	Font         text.Font
 	TextSize     unit.Value
@@ -19,13 +23,12 @@ type DuoUIcounter struct {
 	shaper       text.Shaper
 }
 
-func (t *WingUItheme) DuoUIcounter(pageFunction func()) DuoUIcounter {
-	return DuoUIcounter{
+func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) WingUIcounter {
+	return WingUIcounter{
 		// ToDo Replace theme's buttons with counter exclusive buttons, set icons for increase/decrease
-		//increase: t.DuoUIbutton("", "", "", t.Colors["Light"], "", t.Colors["Dark"], "counterPlusIcon", t.Colors["Primary"], 0, 24, 32, 32, 0, 0, 0, 0),
-		//decrease: t.DuoUIbutton("", "", "", t.Colors["Light"], "", t.Colors["Dark"], "counterMinusIcon", t.Colors["Primary"], 0, 24, 32, 32, 0, 0, 0, 0),
-		// reset:        t.DuoUIbutton(t.Font.Secondary, "RESET", t.Colors["Primary"], t.Colors["Light"], t.Colors["Light"], t.Colors["Primary"], "", "", 12, 0, 0, 48, 48, 0),
-		//input:        t.DuoUIeditor("", "DocText", "DocBg", 5),
+		increase:     material.IconButton(t.T, cc.CounterIncrease, t.Icons["counterPlusIcon"]),
+		decrease:     material.IconButton(t.T, cc.CounterDecrease, t.Icons["counterMinusIcon"]),
+		input:        material.Editor(t.T, cc.CounterInput, "0"),
 		pageFunction: pageFunction,
 		Font: text.Font{
 			Typeface: t.Fonts["Primary"],
@@ -37,95 +40,97 @@ func (t *WingUItheme) DuoUIcounter(pageFunction func()) DuoUIcounter {
 	}
 }
 
-//
-//func (c DuoUIcounter) Layout(g *layout.Context, cc *gel.DuoUIcounter, label, value string) {
-//	cc.CounterInput.SetText(value)
-//	hmin := g.Constraints.Min.X
-//	vmin := g.Constraints.Min.Y
-//	// txColor := c.TxColor
-//	bgColor := c.BgColor
-//	layout.Stack{Alignment: layout.Center}.Layout(g,
-//		layout.Expanded(func() {
-//			rr := float32(g.Px(unit.Dp(0)))
-//			clip.Rect{
-//				Rect: f32.Rectangle{Max: f32.Point{
-//					X: float32(g.Constraints.Min.X),
-//					Y: float32(g.Constraints.Min.Y),
-//				}},
-//				NE: rr, NW: rr, SE: rr, SW: rr,
-//			}.Op(g.Ops).Add(g.Ops)
-//			fill(g, HexARGB(bgColor))
-//		}),
-//		layout.Stacked(func() {
-//			g.Constraints.Min.X = hmin
-//			g.Constraints.Min.Y = vmin
-//			layout.Center.Layout(g, func() {
-//				layout.Flex{
-//					Spacing:   layout.SpaceAround,
-//					Alignment: layout.Middle,
-//				}.Layout(gtx,
-//					layout.Rigid(func() {
-//						for cc.CounterDecrease.Clicked(gtx) {
-//							cc.Decrease()
-//							c.pageFunction()
-//						}
-//						c.decrease.IconLayout(gtx, cc.CounterDecrease)
-//					}),
-//					layout.Rigid(func() {
-//						layout.Center.Layout(gtx, func() {
-//							layout.Inset{
-//								Top:    unit.Dp(0),
-//								Right:  unit.Dp(16),
-//								Bottom: unit.Dp(0),
-//								Left:   unit.Dp(16),
-//							}.Layout(gtx, func() {
-//								layout.Flex{
-//									Axis:      layout.Vertical,
-//									Spacing:   layout.SpaceAround,
-//									Alignment: layout.Middle,
-//								}.Layout(gtx,
-//									layout.Rigid(func() {
-//										paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-//										gel.Label{
-//											Alignment: text.Middle,
-//										}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
-//									}),
-//									layout.Rigid(func() {
-//										c.input.Font.Typeface = c.Font.Typeface
-//										c.input.Color = HexARGB(c.TxColor)
-//										c.input.Layout(gtx, cc.CounterInput)
-//										for _, e := range cc.CounterInput.Events(gtx) {
-//											switch e.(type) {
-//											case gel.ChangeEvent:
-//												if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
-//													cc.Value = i
-//												}
-//											}
-//										}
-//										// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-//										// gel.Label{
-//										//	Alignment: text.Middle,
-//										// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
-//									}))
-//							})
-//						})
-//					}),
-//					// layout.Flexed(0.2, func() {
-//					//	//for cc.CounterReset.Clicked(gtx) {
-//					//	//	cc.Reset()
-//					//	//	c.pageFunction()
-//					//	//}
-//					//	//c.reset.Layout(gtx, cc.CounterReset)
-//					// }),
-//					layout.Rigid(func() {
-//						for cc.CounterIncrease.Clicked(gtx) {
-//							cc.Increase()
-//							c.pageFunction()
-//						}
-//						c.increase.IconLayout(gtx, cc.CounterIncrease)
-//					}))
-//			})
-//		}),
-//	)
-//
-//}
+func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, value string) func(gtx C) D {
+	return func(gtx C) D {
+		cc.CounterInput.SetText(value)
+		//hmin := g.Constraints.Min.X
+		//vmin := g.Constraints.Min.Y
+		// txColor := c.TxColor
+		bgColor := c.BgColor
+		return layout.Stack{Alignment: layout.Center}.Layout(g,
+			layout.Expanded(func(gtx C) D {
+				rr := float32(g.Px(unit.Dp(0)))
+				clip.Rect{
+					Rect: f32.Rectangle{Max: f32.Point{
+						X: float32(g.Constraints.Min.X),
+						Y: float32(g.Constraints.Min.Y),
+					}},
+					NE: rr, NW: rr, SE: rr, SW: rr,
+				}.Op(g.Ops).Add(g.Ops)
+				return fill(g, HexARGB(bgColor))
+			}),
+			layout.Stacked(func(gtx C) D {
+				//g.Constraints.Min.X = hmin
+				//g.Constraints.Min.Y = vmin
+				return layout.Center.Layout(g, func(gtx C) D {
+					return layout.Flex{
+						Spacing:   layout.SpaceAround,
+						Alignment: layout.Middle,
+					}.Layout(gtx,
+						layout.Rigid(func(gtx C) D {
+							for cc.CounterDecrease.Clicked() {
+								cc.Decrease()
+								c.pageFunction()
+							}
+							return c.decrease.Layout(gtx)
+						}),
+						//layout.Rigid(func(gtx C) D {
+						//	return layout.Center.Layout(gtx, func(gtx C) D {
+						//		return layout.Inset{
+						//			Top:    unit.Dp(0),
+						//			Right:  unit.Dp(16),
+						//			Bottom: unit.Dp(0),
+						//			Left:   unit.Dp(16),
+						//		}.Layout(gtx, func(gtx C) D {
+						//			return layout.Flex{
+						//				Axis:      layout.Vertical,
+						//				Spacing:   layout.SpaceAround,
+						//				Alignment: layout.Middle,
+						//			}.Layout(gtx,
+						//				layout.Rigid(func(gtx C) D {
+						//					paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//					return widget.Label{
+						//						Alignment: text.Middle,
+						//					}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
+						//				//}),
+						//				//layout.Rigid(func(gtx C) D {
+						//				//	c.input.Font.Typeface = c.Font.Typeface
+						//				//	c.input.Color = HexARGB(c.TxColor)
+						//				//	for _, e := range cc.CounterInput.Events() {
+						//				//		switch e.(type) {
+						//				//		case widget.ChangeEvent:
+						//				//			if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
+						//				//				cc.Value = i
+						//				//			}
+						//				//		}
+						//				//	}
+						//				//	return c.input.Layout(gtx)
+						//				//	// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//				//	// gel.Label{
+						//				//	//	Alignment: text.Middle,
+						//				//	// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
+						//				}))
+						//		})
+						//	})
+						//}),
+						//layout.Flexed(0.2, func() {
+						//	for cc.CounterReset.Clicked(gtx) {
+						//		cc.Reset()
+						//		c.pageFunction()
+						//	}
+						//	c.reset.Layout(gtx, cc.CounterReset)
+						//}),
+						layout.Rigid(func(gtx C) D {
+							for cc.CounterIncrease.Clicked() {
+								cc.Increase()
+								c.pageFunction()
+							}
+							return c.increase.Layout(gtx)
+
+						}))
+				})
+			}),
+		)
+
+	}
+}

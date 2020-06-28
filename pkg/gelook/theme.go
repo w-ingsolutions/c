@@ -3,9 +3,12 @@
 package gelook
 
 import (
+	"gioui.org/font/gofont"
 	"gioui.org/layout"
 	"gioui.org/text"
 	"gioui.org/unit"
+	"gioui.org/widget"
+	"gioui.org/widget/material"
 	"image/color"
 )
 
@@ -15,6 +18,7 @@ type (
 )
 
 type WingUItheme struct {
+	T        *material.Theme
 	Shaper   text.Shaper
 	TextSize unit.Value
 	Color    struct {
@@ -25,7 +29,7 @@ type WingUItheme struct {
 	}
 	Colors map[string]string
 	Fonts  map[string]text.Typeface
-	//Icons         map[string]*WingUIicon
+	Icons  map[string]*widget.Icon
 
 	scrollBarSize int
 }
@@ -41,11 +45,12 @@ func register(fnt text.Font, ttf []byte) {
 
 func NewWingUItheme() *WingUItheme {
 	t := &WingUItheme{
+		T: material.NewTheme(gofont.Collection()),
 		//Shaper: font.Default(),
 	}
 	t.Colors = NewWingUIcolors()
 	t.TextSize = unit.Sp(16)
-	//t.Icons = NewDuoUIicons()
+	t.Icons = NewWingUIicons()
 	return t
 }
 
