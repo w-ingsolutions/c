@@ -33,25 +33,27 @@ func (p *WingUIpanel) panelLayout(g *layout.Context, panel *gel.Panel, row func(
 
 func (p *WingUIpanel) Layout(g layout.Context, panel *gel.Panel, row func(i int, in interface{})) func(gtx C) D {
 	return func(gtx C) D {
-		return p.container.Layout(&g, layout.NW, func(gtx C) D {
-			return layout.Flex{
-				Axis:    layout.Horizontal,
-				Spacing: layout.SpaceBetween,
-			}.Layout(g,
-				layout.Flexed(1, p.panelLayout(&g, panel, row)),
-				layout.Rigid(func(gtx C) D {
-					var d D
-					if panel.PanelObjectsNumber > panel.VisibleObjectsNumber {
-						//return	p.ScrollBarLayout(g, panel)
-					}
-					return d
-				}),
-			)
-			//fmt.Println("scrollUnit:", panel.ScrollUnit)
-			//fmt.Println("ScrollBar.Slider.Height:", panel.ScrollBar.Slider.Height)
-			//fmt.Println("PanelObjectsNumber:", panel.PanelObjectsNumber)
+		//return p.container.Layout(g, layout.NW, func(gtx C) D {
+		var d D
+		//return layout.Flex{
+		//	Axis:    layout.Horizontal,
+		//	Spacing: layout.SpaceBetween,
+		//}.Layout(g,
+		//	layout.Flexed(1, p.panelLayout(&g, panel, row)),
+		//	layout.Rigid(func(gtx C) D {
+		//		var d D
+		//		if panel.PanelObjectsNumber > panel.VisibleObjectsNumber {
+		//			//return	p.ScrollBarLayout(g, panel)
+		//		}
+		//		return d
+		//	}),
+		//)
+		//fmt.Println("scrollUnit:", panel.ScrollUnit)
+		//fmt.Println("ScrollBar.Slider.Height:", panel.ScrollBar.Slider.Height)
+		//fmt.Println("PanelObjectsNumber:", panel.PanelObjectsNumber)
 
-			//panel.Layout(&g)
-		})
+		//panel.Layout(&g)
+		return d
+		//})
 	}
 }

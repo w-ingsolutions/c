@@ -49,45 +49,36 @@ func (t *WingUItheme) WingUIcontainer(padding int, background string) WingUIcont
 	}
 }
 
-func (w WingUIcontainer) Layout(g *layout.Context, direction layout.Direction, itemContent func(gtx C) D) D {
-	var d D
-	hmin := g.Constraints.Min.X
-	vmin := g.Constraints.Min.Y
+func (w WingUIcontainer) Layout(gtx *layout.Context, direction layout.Direction, itemContent func(gtx C) D) D {
+	hmin := gtx.Constraints.Min.X
+	vmin := gtx.Constraints.Min.Y
 	if w.FullWidth {
-		hmin = g.Constraints.Max.Y
+		hmin = gtx.Constraints.Max.Y
 	}
-	return layout.Stack{Alignment: layout.W}.Layout(*g,
+	return layout.Stack{Alignment: layout.W}.Layout(*gtx,
 		layout.Expanded(func(gtx C) D {
-			var dd D
-			rr := float32(g.Px(unit.Dp(float32(w.CornerRadius))))
+			rr := float32(gtx.Px(unit.Dp(float32(w.CornerRadius))))
 			clip.Rect{
 				Rect: f32.Rectangle{Max: f32.Point{
-					X: float32(g.Constraints.Min.X),
-					Y: float32(g.Constraints.Min.Y),
+					X: float32(gtx.Constraints.Min.X),
+					Y: float32(gtx.Constraints.Min.Y),
 				}},
 				NE: rr, NW: rr, SE: rr, SW: rr,
-			}.Op(g.Ops).Add(g.Ops)
-			fill(*g, HexARGB(w.Background))
+			}.Op(gtx.Ops).Add(gtx.Ops)
+			return fill(gtx, HexARGB(w.Background))
 			//pointer.Rect(image.Rectangle{Max: g.Dimensions.Size}).Add(g.Ops)
-			return dd
 		}),
 		layout.Stacked(func(gtx C) D {
-			var dd D
 			gtx.Constraints.Min.Y = hmin
 			gtx.Constraints.Min.Y = vmin
-			direction.Layout(gtx, func(gtx C) D {
-				var ddd D
-				layout.Inset{
+			return direction.Layout(gtx, func(gtx C) D {
+				return layout.Inset{
 					Top:    unit.Dp(float32(w.PaddingTop)),
 					Right:  unit.Dp(float32(w.PaddingRight)),
 					Bottom: unit.Dp(float32(w.PaddingBottom)),
 					Left:   unit.Dp(float32(w.PaddingLeft)),
 				}.Layout(gtx, itemContent)
-				return ddd
 			})
-			return dd
-
 		}),
 	)
-	return d
 }

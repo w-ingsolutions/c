@@ -30,6 +30,7 @@ type WingIzabraniElementi struct {
 	SumaCena                       float64
 	SumaCenaMaterijal              float64
 	Elementi                       []*WingIzabraniElement
+	ElementiPrikaz                 []*WingIzabraniElement
 	UkupanNeophodanMaterijal       map[int]WingNeophodanMaterijal
 	UkupanNeophodanMaterijalPrikaz map[int]WingNeophodanMaterijal
 }
