@@ -43,7 +43,7 @@ func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) W
 	}
 }
 
-func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, t *material.Theme, g layout.Context, label, value string) func(gtx C) layout.Dimensions {
+func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, value string) func(gtx C) layout.Dimensions {
 	return func(gtx C) D {
 		cc.CounterInput.SetText(value)
 		hmin := g.Constraints.Min.X
@@ -107,10 +107,7 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, t *material.Theme, g layout.
 													}
 												}
 											}
-											//return c.input.Layout(gtx)
-											e := material.Editor(t, cc.CounterInput, "Hint")
-											e.Font.Style = text.Italic
-											return e.Layout(gtx)
+											return c.input.Layout(gtx)
 											// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
 											// gel.Label{
 											//	Alignment: text.Middle,
