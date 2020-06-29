@@ -24,6 +24,7 @@ type WingUIcounter struct {
 	TxColor      string
 	BgColor      string
 	shaper       text.Shaper
+	T            *material.Theme
 }
 
 func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) WingUIcounter {
@@ -40,6 +41,7 @@ func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) W
 		BgColor:  t.Colors["Dark"],
 		TextSize: unit.Dp(float32(18)),
 		shaper:   t.Shaper,
+		T:        t.T,
 	}
 }
 
@@ -107,7 +109,10 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, val
 													}
 												}
 											}
-											return c.input.Layout(gtx)
+											//return c.input.Layout(gtx)
+											e := material.Editor(c, cc.CounterInput, "Hint")
+											e.Font.Style = text.Italic
+											return e.Layout(gtx)
 											// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
 											// gel.Label{
 											//	Alignment: text.Middle,
