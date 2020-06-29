@@ -4,10 +4,8 @@ import (
 	"gioui.org/f32"
 	"gioui.org/layout"
 	"gioui.org/op/clip"
-	"gioui.org/op/paint"
 	"gioui.org/text"
 	"gioui.org/unit"
-	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel"
 )
@@ -122,13 +120,13 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, val
 						//	}
 						//	c.reset.Layout(gtx, cc.CounterReset)
 						//}),
-						layout.Flexed(0.2, func(gtx C) D {
-
-							paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-							return widget.Label{
-								Alignment: text.Middle,
-							}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
-						}),
+						//layout.Flexed(0.2, func(gtx C) D {
+						//
+						//	//paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//	//return widget.Label{
+						//	//	Alignment: text.Middle,
+						//	//}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
+						//}),
 						//layout.Rigid(func(gtx C) D {
 						//	c.input.Font.Typeface = c.Font.Typeface
 						//	c.input.Color = HexARGB(c.TxColor)
