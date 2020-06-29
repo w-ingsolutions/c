@@ -52,7 +52,7 @@ func WingUIfill(gtx layout.Context, col string) {
 	//gtx.Dimensions = layout.Dimensions{Size: d}
 }
 
-func (t *WingUItheme) WingUIline(g layout.Context, verticalPadding, horizontalPadding float32, size int, color string) D {
+func (t *WingUItheme) WingUIline(g layout.Context, verticalPadding, horizontalPadding float32, size int, color string) layout.Dimensions {
 	return layout.Inset{
 		Top:    unit.Dp(verticalPadding),
 		Right:  unit.Dp(horizontalPadding),
