@@ -10,7 +10,6 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel"
-	"strconv"
 )
 
 type WingUIcounter struct {
@@ -77,51 +76,75 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, label, val
 							}
 							return c.decrease.Layout(gtx)
 						}),
-						layout.Rigid(func(gtx C) D {
-							return layout.Center.Layout(gtx, func(gtx C) D {
-								return layout.Inset{
-									Top:    unit.Dp(0),
-									Right:  unit.Dp(16),
-									Bottom: unit.Dp(0),
-									Left:   unit.Dp(16),
-								}.Layout(gtx, func(gtx C) D {
-									return layout.Flex{
-										Axis:      layout.Vertical,
-										Spacing:   layout.SpaceAround,
-										Alignment: layout.Middle,
-									}.Layout(gtx,
-										layout.Rigid(func(gtx C) D {
-											paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-											return widget.Label{
-												Alignment: text.Middle,
-											}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
-										}),
-										layout.Rigid(func(gtx C) D {
-											c.input.Font.Typeface = c.Font.Typeface
-											c.input.Color = HexARGB(c.TxColor)
-											for _, e := range cc.CounterInput.Events() {
-												switch e.(type) {
-												case widget.ChangeEvent:
-													if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
-														cc.Value = i
-													}
-												}
-											}
-											return c.input.Layout(gtx)
-											// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-											// gel.Label{
-											//	Alignment: text.Middle,
-											// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
-										}))
-								})
-							})
-						}),
+						//layout.Rigid(func(gtx C) D {
+						//	return layout.Center.Layout(gtx, func(gtx C) D {
+						//		return layout.Inset{
+						//			Top:    unit.Dp(0),
+						//			Right:  unit.Dp(16),
+						//			Bottom: unit.Dp(0),
+						//			Left:   unit.Dp(16),
+						//		}.Layout(gtx, func(gtx C) D {
+						//			return layout.Flex{
+						//				Axis:      layout.Vertical,
+						//				Spacing:   layout.SpaceAround,
+						//				Alignment: layout.Middle,
+						//			}.Layout(gtx,
+						//				layout.Rigid(func(gtx C) D {
+						//					paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//					return widget.Label{
+						//						Alignment: text.Middle,
+						//					}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
+						//				}),
+						//				layout.Rigid(func(gtx C) D {
+						//					c.input.Font.Typeface = c.Font.Typeface
+						//					c.input.Color = HexARGB(c.TxColor)
+						//					for _, e := range cc.CounterInput.Events() {
+						//						switch e.(type) {
+						//						case widget.ChangeEvent:
+						//							if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
+						//								cc.Value = i
+						//							}
+						//						}
+						//					}
+						//					return c.input.Layout(gtx)
+						//					// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//					// gel.Label{
+						//					//	Alignment: text.Middle,
+						//					// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
+						//				}))
+						//		})
+						//	})
+						//}),
 						//layout.Flexed(0.2, func() {
 						//	for cc.CounterReset.Clicked(gtx) {
 						//		cc.Reset()
 						//		c.pageFunction()
 						//	}
 						//	c.reset.Layout(gtx, cc.CounterReset)
+						//}),
+						layout.Flexed(0.2, func(gtx C) D {
+
+							paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+							return widget.Label{
+								Alignment: text.Middle,
+							}.Layout(gtx, c.shaper, c.Font, unit.Dp(8), label)
+						}),
+						//layout.Rigid(func(gtx C) D {
+						//	c.input.Font.Typeface = c.Font.Typeface
+						//	c.input.Color = HexARGB(c.TxColor)
+						//	for _, e := range cc.CounterInput.Events() {
+						//		switch e.(type) {
+						//		case widget.ChangeEvent:
+						//			if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
+						//				cc.Value = i
+						//			}
+						//		}
+						//	}
+						//	return c.input.Layout(gtx)
+						//	// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+						//	// gel.Label{
+						//	//	Alignment: text.Middle,
+						//	// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
 						//}),
 						layout.Rigid(func(gtx C) D {
 							for cc.CounterIncrease.Clicked() {
