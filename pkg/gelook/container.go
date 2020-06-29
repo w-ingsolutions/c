@@ -50,11 +50,11 @@ func (t *WingUItheme) WingUIcontainer(padding int, background string) WingUIcont
 }
 
 func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, itemContent func(gtx C) D) layout.Dimensions {
-	//hmin := g.Constraints.Min.X
-	//vmin := g.Constraints.Min.Y
-	//if w.FullWidth {
-	//	hmin = g.Constraints.Max.Y
-	//}
+	hmin := g.Constraints.Min.X
+	vmin := g.Constraints.Min.Y
+	if w.FullWidth {
+		hmin = g.Constraints.Max.Y
+	}
 	return layout.Stack{Alignment: layout.W}.Layout(g,
 		layout.Expanded(func(gtx C) D {
 			rr := float32(gtx.Px(unit.Dp(float32(w.CornerRadius))))
@@ -69,8 +69,8 @@ func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, it
 			//pointer.Rect(image.Rectangle{Max: g.Dimensions.Size}).Add(g.Ops)
 		}),
 		layout.Stacked(func(gtx C) D {
-			//gtx.Constraints.Min.Y = hmin
-			//gtx.Constraints.Min.Y = vmin
+			gtx.Constraints.Min.Y = hmin
+			gtx.Constraints.Min.Y = vmin
 			return direction.Layout(gtx, func(gtx C) D {
 				return layout.Inset{
 					Top:    unit.Dp(float32(w.PaddingTop)),
