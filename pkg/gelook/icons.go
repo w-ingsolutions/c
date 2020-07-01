@@ -6,7 +6,7 @@ import (
 	"gioui.org/widget"
 	"image/color"
 
-	"github.com/w-ingsolutions/c/pkg/gelook/ico"
+	"github.com/w-ingsolutions/c/pkg/logo"
 
 	"gioui.org/f32"
 	"gioui.org/layout"
@@ -26,7 +26,7 @@ func NewWingUIicons() (i map[string]*widget.Icon) {
 	i["foldIn"] = mustIcon(widget.NewIcon(icons.ContentRemove))
 	i["minimize"] = mustIcon(widget.NewIcon(icons.NavigationExpandMore))
 	i["zoom"] = mustIcon(widget.NewIcon(icons.NavigationExpandLess))
-	i["logo"] = mustIcon(widget.NewIcon(ico.WingLogo))
+	i["logo"] = mustIcon(widget.NewIcon(logo.Wing))
 	i["overviewIcon"] = mustIcon(widget.NewIcon(icons.ActionHome))
 	i["sendIcon"] = mustIcon(widget.NewIcon(icons.ActionStarRate))
 	i["receiveIcon"] = mustIcon(widget.NewIcon(icons.NavigationArrowDropDown))
