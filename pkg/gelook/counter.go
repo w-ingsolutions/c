@@ -4,10 +4,13 @@ import (
 	"gioui.org/f32"
 	"gioui.org/layout"
 	"gioui.org/op/clip"
+	"gioui.org/op/paint"
 	"gioui.org/text"
 	"gioui.org/unit"
+	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel"
+	"strconv"
 )
 
 type WingUIcounter struct {
@@ -96,22 +99,23 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, th *materi
 											//return layout.Dimensions{}
 										}),
 										layout.Rigid(func(gtx C) D {
-											//c.input.Font.Typeface = c.Font.Typeface
-											//c.input.Color = HexARGB(c.TxColor)
-											//for _, e := range cc.CounterInput.Events() {
-											//	switch e.(type) {
-											//	case widget.ChangeEvent:
-											//		if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
-											//			cc.Value = i
-											//		}
-											//	}
-											//}
-											//return c.input.Layout(gtx)
-											// paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
-											// gel.Label{
+											c.input.Font.Typeface = c.Font.Typeface
+											c.input.Color = HexARGB(c.TxColor)
+											for _, e := range cc.CounterInput.Events() {
+												switch e.(type) {
+												case widget.ChangeEvent:
+													if i, err := strconv.Atoi(cc.CounterInput.Text()); err == nil {
+														cc.Value = i
+													}
+												}
+											}
+											return c.input.Layout(gtx)
+											paint.ColorOp{Color: HexARGB(c.TxColor)}.Add(gtx.Ops)
+											return material.Body1(th, value).Layout(gtx)
+											//{
 											//	Alignment: text.Middle,
-											// }.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
-											return layout.Dimensions{}
+											//}.Layout(gtx, c.shaper, c.Font, unit.Dp(12), value)
+											//return layout.Dimensions{}
 										}))
 								})
 							})
