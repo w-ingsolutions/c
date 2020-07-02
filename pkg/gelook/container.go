@@ -53,7 +53,7 @@ func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, it
 	hmin := g.Constraints.Min.X
 	vmin := g.Constraints.Min.Y
 	if w.FullWidth {
-		hmin = g.Constraints.Max.Y
+		hmin = g.Constraints.Max.X
 	}
 	return layout.Stack{Alignment: layout.W}.Layout(g,
 		layout.Expanded(func(gtx C) D {

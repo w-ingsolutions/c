@@ -59,7 +59,7 @@ func (t *WingUItheme) WingUIline(g layout.Context, verticalPadding, horizontalPa
 		Bottom: unit.Dp(verticalPadding),
 		Left:   unit.Dp(horizontalPadding),
 	}.Layout(g, func(gtx C) D {
-		return DuoUIdrawRectangle(g, g.Constraints.Max.X, size, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
+		return DuoUIdrawRectangle(gtx, gtx.Constraints.Max.X, size, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
 	})
 }
 
