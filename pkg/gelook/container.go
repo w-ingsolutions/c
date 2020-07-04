@@ -49,7 +49,7 @@ func (t *WingUItheme) WingUIcontainer(padding int, background string) WingUIcont
 	}
 }
 
-func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, itemContent func(gtx C) D) layout.Dimensions {
+func (w WingUIcontainer) Layout(g layout.Context, direction layout.Direction, itemContent layout.Widget) layout.Dimensions {
 	hmin := g.Constraints.Min.X
 	vmin := g.Constraints.Min.Y
 	if w.FullWidth {
