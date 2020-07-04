@@ -52,14 +52,21 @@ func WingUIfill(gtx layout.Context, col string) {
 	//gtx.Dimensions = layout.Dimensions{Size: d}
 }
 
-func (t *WingUItheme) WingUIline(g layout.Context, verticalPadding, horizontalPadding float32, size int, color string) layout.Dimensions {
+func (t *WingUItheme) WingUIline(g layout.Context, vert bool, verticalPadding, horizontalPadding float32, size int, color string) layout.Dimensions {
 	return layout.Inset{
 		Top:    unit.Dp(verticalPadding),
 		Right:  unit.Dp(horizontalPadding),
 		Bottom: unit.Dp(verticalPadding),
 		Left:   unit.Dp(horizontalPadding),
 	}.Layout(g, func(gtx C) D {
-		return DuoUIdrawRectangle(gtx, gtx.Constraints.Max.X, size, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
+		v := size
+		h := gtx.Constraints.Max.X
+		if vert {
+			h = size
+			v = gtx.Constraints.Max.Y
+		}
+
+		return DuoUIdrawRectangle(gtx, h, v, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
 	})
 }
 
