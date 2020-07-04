@@ -52,22 +52,23 @@ func WingUIfill(gtx layout.Context, col string) {
 	//gtx.Dimensions = layout.Dimensions{Size: d}
 }
 
-func (t *WingUItheme) WingUIline(g layout.Context, vert bool, verticalPadding, horizontalPadding float32, size int, color string) layout.Dimensions {
-	return layout.Inset{
-		Top:    unit.Dp(verticalPadding),
-		Right:  unit.Dp(horizontalPadding),
-		Bottom: unit.Dp(verticalPadding),
-		Left:   unit.Dp(horizontalPadding),
-	}.Layout(g, func(gtx C) D {
-		v := size
-		h := gtx.Constraints.Max.X
-		if vert {
-			h = size
-			v = gtx.Constraints.Max.Y
-		}
-
-		return DuoUIdrawRectangle(gtx, h, v, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
-	})
+func (t *WingUItheme) WingUIline(vert bool, verticalPadding, horizontalPadding float32, size int, color string) func(gtx C) D {
+	return func(gtx C) D {
+		return layout.Inset{
+			Top:    unit.Dp(verticalPadding),
+			Right:  unit.Dp(horizontalPadding),
+			Bottom: unit.Dp(verticalPadding),
+			Left:   unit.Dp(horizontalPadding),
+		}.Layout(gtx, func(gtx C) D {
+			v := size
+			h := gtx.Constraints.Max.X
+			if vert {
+				h = size
+				v = 30
+			}
+			return DuoUIdrawRectangle(gtx, h, v, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
+		})
+	}
 }
 
 func toPointF(p image.Point) f32.Point {
