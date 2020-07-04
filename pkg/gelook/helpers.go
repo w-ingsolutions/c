@@ -64,7 +64,7 @@ func (t *WingUItheme) WingUIline(vert bool, verticalPadding, horizontalPadding f
 			h := gtx.Constraints.Max.X
 			if vert {
 				h = size
-				v = 30
+				v = gtx.Constraints.Max.Y
 			}
 			return DuoUIdrawRectangle(gtx, h, v, color, [4]float32{0, 0, 0, 0}, [4]float32{0, 0, 0, 0})
 		})
