@@ -1,4 +1,4 @@
-package appdata
+package homedir
 
 import (
 	"errors"
