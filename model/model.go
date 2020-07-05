@@ -35,6 +35,7 @@ type EditabilnaPoljaVrsteRadova struct {
 }
 
 type ElementMenu struct {
+	Id        string
 	Title     string
 	Materijal bool
 }
