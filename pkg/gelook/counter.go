@@ -10,36 +10,39 @@ import (
 	"gioui.org/widget"
 	"gioui.org/widget/material"
 	"github.com/gioapp/gel"
+	"image"
 	"strconv"
 )
 
 type WingUIcounter struct {
-	increase     material.IconButtonStyle
-	decrease     material.IconButtonStyle
-	reset        material.IconButtonStyle
+	increase     *iconBtn
+	decrease     *iconBtn
+	reset        *iconBtn
 	input        material.EditorStyle
 	pageFunction func()
 	Font         text.Font
 	TextSize     unit.Value
 	TxColor      string
 	BgColor      string
+	BtnBgColor   string
 	shaper       text.Shaper
 }
 
 func (t *WingUItheme) WingUIcounter(cc *gel.DuoUIcounter, pageFunction func()) WingUIcounter {
 	return WingUIcounter{
 		// ToDo Replace theme's buttons with counter exclusive buttons, set icons for increase/decrease
-		increase:     material.IconButton(t.T, cc.CounterIncrease, t.Icons["counterPlusIcon"]),
-		decrease:     material.IconButton(t.T, cc.CounterDecrease, t.Icons["counterMinusIcon"]),
+		increase:     iconButton(t.T, t.Icons["counterPlusIcon"], cc.CounterIncrease, t.Colors["Primary"]),
+		decrease:     iconButton(t.T, t.Icons["counterMinusIcon"], cc.CounterDecrease, t.Colors["Primary"]),
 		input:        material.Editor(t.T, cc.CounterInput, "0"),
 		pageFunction: pageFunction,
 		Font: text.Font{
 			Typeface: t.Fonts["Primary"],
 		},
-		TxColor:  t.Colors["Light"],
-		BgColor:  t.Colors["Dark"],
-		TextSize: unit.Dp(float32(18)),
-		shaper:   t.Shaper,
+		TxColor:    t.Colors["Light"],
+		BgColor:    t.Colors["Dark"],
+		BtnBgColor: t.Colors["Primary"],
+		TextSize:   unit.Dp(float32(18)),
+		shaper:     t.Shaper,
 	}
 }
 
@@ -157,11 +160,53 @@ func (c WingUIcounter) Layout(cc *gel.DuoUIcounter, g layout.Context, th *materi
 								c.pageFunction()
 							}
 							return c.increase.Layout(gtx)
-
 						}))
 				})
 			}),
 		)
 
 	}
+}
+
+type iconBtn struct {
+	theme  *material.Theme
+	button *widget.Clickable
+	icon   *widget.Icon
+	word   string
+	bg     string
+}
+
+func iconButton(t *material.Theme, i *widget.Icon, c *widget.Clickable, bg string) *iconBtn {
+	return &iconBtn{
+		theme:  t,
+		button: c,
+		icon:   i,
+		bg:     bg,
+	}
+}
+
+func (b iconBtn) Layout(gtx layout.Context) layout.Dimensions {
+	btn := material.ButtonLayout(b.theme, b.button)
+	btn.CornerRadius = unit.Dp(0)
+	btn.Background = HexARGB(b.bg)
+	return btn.Layout(gtx, func(gtx C) D {
+		return layout.UniformInset(unit.Dp(0)).Layout(gtx, func(gtx C) D {
+			iconAndLabel := layout.Flex{Axis: layout.Horizontal, Alignment: layout.Middle}
+			layIcon := layout.Rigid(func(gtx C) D {
+				return layout.Inset{}.Layout(gtx, func(gtx C) D {
+					var d D
+					if b.icon != nil {
+						size := gtx.Px(unit.Dp(24))
+						b.icon.Layout(gtx, unit.Px(float32(size)))
+						d = layout.Dimensions{
+							Size: image.Point{X: size, Y: size},
+						}
+					}
+					return d
+				})
+			})
+
+			return iconAndLabel.Layout(gtx, layIcon)
+		})
+	})
 }
