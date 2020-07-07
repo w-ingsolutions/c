@@ -9,15 +9,17 @@ type Translation struct {
 }
 
 func (t *Translation) T(text string) string {
-	translated, err := gtranslate.TranslateWithParams(
-		text,
-		gtranslate.TranslationParams{
-			From: t.Source,
-			To:   t.Result,
-		},
-	)
-	if err != nil {
-		translated = err.Error()
+	if t.Source != t.Result {
+		translated, err := gtranslate.TranslateWithParams(
+			text,
+			gtranslate.TranslationParams{
+				From: t.Source,
+				To:   t.Result,
+			},
+		)
+		if err != nil {
+			translated = err.Error()
+		}
+		return translated
 	}
-	return translated
 }
