@@ -5,6 +5,6 @@ import (
 )
 
 // FileExists returns whether a file exists
-func P(filePath string) *gofpdf.Fpdf {
+func P() *gofpdf.Fpdf {
 	return gofpdf.New("P", "", "", "./../font")
 }
