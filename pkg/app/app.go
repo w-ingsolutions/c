@@ -59,11 +59,6 @@ func appdataDir(goos, appName string, roaming bool) string {
 			return filepath.Join(homeDir, "Library",
 				"Application Support", appNameUpper)
 		}
-	case "android":
-		if homeDir != "" {
-			return "/sdcard"
-		}
-
 	case "plan9":
 		if homeDir != "" {
 			return filepath.Join(homeDir, appNameLower)
