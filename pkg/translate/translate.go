@@ -17,7 +17,7 @@ func (t *Translation) translate(text string) string {
 		},
 	)
 	if err != nil {
-		translated = err.String()
+		translated = err.Error()
 	}
 	return translated
 }
