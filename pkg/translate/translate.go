@@ -8,7 +8,7 @@ type Translation struct {
 	source, result string
 }
 
-func (t *Translation) translate(text string) string {
+func (t *Translation) Translate(text string) string {
 	translated, err := gtranslate.TranslateWithParams(
 		text,
 		gtranslate.TranslationParams{
