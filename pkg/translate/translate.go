@@ -4,13 +4,20 @@ import (
 	"github.com/bregydoc/gtranslate"
 )
 
-func translate(text, source, result string) (string, error) {
+type Translation struct {
+	source, result string
+}
+
+func (t *Translation) translate(text string) string {
 	translated, err := gtranslate.TranslateWithParams(
 		text,
 		gtranslate.TranslationParams{
-			From: source,
-			To:   result,
+			From: t.source,
+			To:   t.result,
 		},
 	)
-	return translated, err
+	if err != nil {
+		translated = err.String()
+	}
+	return translated
 }
