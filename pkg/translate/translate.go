@@ -5,15 +5,15 @@ import (
 )
 
 type Translation struct {
-	source, result string
+	Source, Result string
 }
 
 func (t *Translation) T(text string) string {
 	translated, err := gtranslate.TranslateWithParams(
 		text,
 		gtranslate.TranslationParams{
-			From: t.source,
-			To:   t.result,
+			From: t.Source,
+			To:   t.Result,
 		},
 	)
 	if err != nil {

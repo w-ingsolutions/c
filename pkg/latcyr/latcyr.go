@@ -69,16 +69,22 @@ var LatinToCyrillic = map[string]string{
 
 func C(s string, enable bool) (result string) {
 	if enable {
-		var caracter string
+		var (
+			caracter string
+		)
 		for i, r := range s {
 			caracter = string(r)
+			last := false
 			if i != len(s)-1 {
 				if _, exist := LatinToCyrillic[string(r)+string(s[i+1])]; exist {
 					caracter = string(r) + string(s[i+1])
+					last = true
 				}
 			}
 			if cyrillic, exist := LatinToCyrillic[caracter]; exist {
-				result += cyrillic
+				if !last {
+					result += cyrillic
+				}
 			} else {
 				result += string(r)
 			}
