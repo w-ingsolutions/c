@@ -38,4 +38,5 @@ type ElementMenu struct {
 	Id        string
 	Title     string
 	Materijal bool
+	Link      *widget.Clickable
 }
