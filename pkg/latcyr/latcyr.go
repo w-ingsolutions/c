@@ -1,5 +1,7 @@
 package latcyr
 
+import "fmt"
+
 // Mapping of Latin characters to Cyrillic.
 var LatinToCyrillic = map[string]string{
 	"a":  "а",
@@ -69,17 +71,26 @@ var LatinToCyrillic = map[string]string{
 
 func C(s string, enable bool) (result string) {
 	if enable {
-		var last int32
-		for _, r := range s {
-			if LatinToCyrillic[string(last+r)] != "" {
-				r = last + r
+		var caracter string
+		for i, r := range s {
+			caracter = string(r)
+			if i != len(s)-1 {
+				if c, exist := LatinToCyrillic[string(r)+string(s[i+1])]; exist {
+					caracter = string(r) + string(s[i+1])
+					fmt.Println("i", i)
+					//r = last + r
+					fmt.Println("last", c)
+					fmt.Println("last + rr", string(r))
+				}
 			}
-			if cyrillic, exist := LatinToCyrillic[string(r)]; exist {
+
+			if cyrillic, exist := LatinToCyrillic[caracter]; exist {
+				fmt.Println("caracter", caracter)
+
 				result += cyrillic
 			} else {
 				result += string(r)
 			}
-			last = r
 		}
 	} else {
 		result = s
