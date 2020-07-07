@@ -44,6 +44,7 @@ type WingLice struct {
 	Grad        string
 	PIB         string
 	MB          string
+	Email       string
 }
 
 type WingInvestitor struct {
