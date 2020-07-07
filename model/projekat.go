@@ -30,6 +30,22 @@ type WingObjekat struct {
 	KO                   string `json:"KO"`
 }
 
+type WingLice struct {
+	Id          int
+	Pravno      bool
+	Admin       bool
+	Naziv       string
+	Ime         string
+	Prezime     string
+	JMBG        string
+	BrojLicence string
+	Ulica       string
+	Broj        string
+	Grad        string
+	PIB         string
+	MB          string
+}
+
 type WingInvestitor struct {
 	NazivInvestitora         string `json:"naziv_investitora"`
 	LokacijaInvestitoraUlica string `json:"lokacija_investitora_ulica"`

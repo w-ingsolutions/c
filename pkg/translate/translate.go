@@ -20,6 +20,7 @@ func (t *Translation) T(text string) string {
 		if err != nil {
 			translated = err.Error()
 		}
-		return translated
+		text = translated
 	}
+	return text
 }
