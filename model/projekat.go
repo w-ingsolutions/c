@@ -1,19 +1,21 @@
 package model
 
 type WingProjekat struct {
-	Id                  int    `json:"id"`
-	Naziv               string `json:"naziv"`
-	Opis                string `json:"opis"`
-	IdProjekta          string `json:"id_projekta"`
-	BrojDokumenta       string `json:"broj_dokumenta"`
-	Sveska              string `json:"sveska"`
-	VrstaDokumenta      string `json:"vrsta_dokumenta"`
-	DatumDokumenta      string `json:"datum"`
-	Objekti             []*WingObjekat
-	Investitori         []*WingInvestitor
-	Projektant          []*WingProjektant
-	OdgovorniProjektant *WingOdgovorniProjektant
-	Dokumntacija        WingDokumentacija
+	Id             int    `json:"id"`
+	Naziv          string `json:"naziv"`
+	Opis           string `json:"opis"`
+	IdProjekta     string `json:"id_projekta"`
+	BrojDokumenta  string `json:"broj_dokumenta"`
+	Sveska         string `json:"sveska"`
+	VrstaDokumenta string `json:"vrsta_dokumenta"`
+	DatumDokumenta string `json:"datum"`
+	Objekti        []*WingObjekat
+	Investitori    []*WingLice
+	Projektant     []*WingLice
+	CenaRadova     float64
+	CenaMaterijala float64
+	//OdgovorniProjektant *WingOdgovorniProjektant
+	//Dokumntacija        WingDokumentacija
 }
 
 type WingObjekat struct {
@@ -31,53 +33,29 @@ type WingObjekat struct {
 }
 
 type WingLice struct {
-	Id          int
-	Pravno      bool
-	Admin       bool
-	Naziv       string
-	Ime         string
-	Prezime     string
-	JMBG        string
-	BrojLicence string
-	Ulica       string
-	Broj        string
-	Grad        string
-	PIB         string
-	MB          string
-	Email       string
+	Id             int
+	Projektant     bool
+	Admin          bool
+	KratakNaziv    string
+	DugiNaziv      string
+	Ime            string
+	Prezime        string
+	JMBG           string
+	BrojLicence    string
+	Adresa         string
+	Grad           string
+	Region         string
+	PIB            string
+	MB             string
+	DatumOsnivanja string
+	Delatnost      string
+	Racuni         []WingBankaRacun
+	Email          string
+	BrojTelefona   string
 }
-
-type WingInvestitor struct {
-	NazivInvestitora         string `json:"naziv_investitora"`
-	LokacijaInvestitoraUlica string `json:"lokacija_investitora_ulica"`
-	LokacijaInvestitoraBroj  string `json:"lokacija_investitora_broj"`
-	LokacijaInvestitoraGrad  string `json:"lokacija_investitora_grad"`
-	PIB                      string `json:"PIB"`
-	MB                       string `json:"MB"`
-	OdgovornoLiceIme         string `json:"odgovorno_lice_ime"`
-	OdgovornoLicePrezime     string `json:"odgovorno_lice_prezime"`
-	FunkcijaOdgovornogLica   string `json:"funkcija_odgovornog_lica"`
-}
-
-type WingProjektant struct {
-	NazivProjektanta         string `json:"naziv_projektanta"`
-	LokacijaProjektantaUlica string `json:"lokacija_projektanta_ulica"`
-	LokacijaProjektantaBroj  string `json:"lokacija_projektanta_broj"`
-	LokacijaProjektantaGrad  string `json:"lokacija_projektanta_grad"`
-	PIB                      string `json:"PIB"`
-	MB                       string `json:"MB"`
-	OdgovornoLiceIme         string `json:"odgovorno_lice_ime"`
-	OdgovornoLicePrezime     string `json:"odgovorno_lice_prezime"`
-	FunkcijaOdgovornoglica   string `json:"funkcija_odgovornog_lica"`
-}
-
-type WingOdgovorniProjektant struct {
-	OdgovornoLiceIime      string `json:"odgovorno_lice_ime"`
-	OdgovornoLicePrezime   string `json:"odgovorno_lice_prezime"`
-	JMBG                   string `json:"jmbg"`
-	BrojLicence            string `json:"broj_licence"`
-	FunkcijaOdgovornogLica string `json:"funkcija_odgovornog_lica"`
-	IDProjektant           string `json:"id"`
+type WingBankaRacun struct {
+	Banka string
+	Racun string
 }
 
 type WingDokumentacija struct {
