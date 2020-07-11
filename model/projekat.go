@@ -12,8 +12,12 @@ type WingProjekat struct {
 	Objekti        []*WingObjekat
 	Investitori    []*WingLice
 	Projektant     []*WingLice
+	Radovi         []*WingIzabraniElement
+	RabatRadovi    int
+	RabatMaterijal int
 	CenaRadova     float64
 	CenaMaterijala float64
+
 	//OdgovorniProjektant *WingOdgovorniProjektant
 	//Dokumntacija        WingDokumentacija
 }
