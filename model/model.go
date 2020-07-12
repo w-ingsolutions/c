@@ -37,6 +37,7 @@ type EditabilnaPoljaVrsteRadova struct {
 type ElementMenu struct {
 	Id        int
 	Title     string
+	Slug      string
 	Materijal bool
 	Link      *widget.Clickable
 }
