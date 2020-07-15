@@ -20,11 +20,12 @@ type WingVrstaRadova struct {
 }
 
 type WingIzabraniElementi struct {
-	Id                 string
-	SumaCena           float64
-	SumaCenaMaterijal  float64
-	Elementi           []*WingIzabraniElement
-	NeophodanMaterijal map[int]WingNeophodanMaterijal
+	Id                             string
+	SumaCena                       float64
+	SumaCenaMaterijal              float64
+	Elementi                       []*WingIzabraniElement
+	NeophodanMaterijal             map[int]WingNeophodanMaterijal
+	UkupanNeophodanMaterijalPrikaz map[int]WingNeophodanMaterijal
 }
 
 type WingIzabraniElement struct {
