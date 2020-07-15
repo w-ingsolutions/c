@@ -33,7 +33,7 @@ func NewWingUIicons() (i map[string]*widget.Icon) {
 	i["rusenja"] = mustIcon(widget.NewIcon(Rusenja))
 	i["sanitarije"] = mustIcon(widget.NewIcon(Sanitarije))
 	i["staklorezacki"] = mustIcon(widget.NewIcon(Staklorezacki))
-	i["stolarski"] = mustIcon(widget.NewIcon(Stolarija))
+	i["stolarija"] = mustIcon(widget.NewIcon(Stolarija))
 	i["gradjevinska"] = mustIcon(widget.NewIcon(Stolarski))
 	i["suvomontazni"] = mustIcon(widget.NewIcon(Suvomontazni))
 	i["tapetarski"] = mustIcon(widget.NewIcon(Tapetarski))
