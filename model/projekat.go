@@ -10,8 +10,8 @@ type WingProjekat struct {
 	VrstaDokumenta string `json:"vrsta_dokumenta"`
 	DatumDokumenta string `json:"datum"`
 	Objekti        []*WingObjekat
-	Investitori    []*WingLice
-	Projektant     []*WingLice
+	Investitori    *WingLice
+	Projektant     *WingLice
 	Elementi       *WingIzabraniElementi
 	RabatRadovi    int
 	RabatMaterijal int
