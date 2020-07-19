@@ -36,8 +36,15 @@ type EditabilnaPoljaVrsteRadova struct {
 
 type ElementMenu struct {
 	Id        int
-	Title     string
+	Naziv     string
 	Slug      string
 	Materijal bool
 	Link      *widget.Clickable
+}
+
+type TipSadrzaja struct {
+	Naziv        string
+	NazivMnozina string
+	Slug         string
+	Link         *widget.Clickable
 }

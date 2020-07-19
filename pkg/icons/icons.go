@@ -43,6 +43,12 @@ func NewWingUIicons() (i map[string]*widget.Icon) {
 	i["zemljani"] = mustIcon(widget.NewIcon(Zemljani))
 	i["zidarski"] = mustIcon(widget.NewIcon(Zidarski))
 
+	i["rad"] = mustIcon(widget.NewIcon(Zidarski))
+	i["materijal"] = mustIcon(widget.NewIcon(Zidarski))
+	i["pravno_lice"] = mustIcon(widget.NewIcon(Zidarski))
+	i["fizicko_lice"] = mustIcon(widget.NewIcon(Zidarski))
+	i["objekat"] = mustIcon(widget.NewIcon(Zidarski))
+
 	i["Checked"] = mustIcon(widget.NewIcon(icons.ToggleCheckBox))
 	i["Unchecked"] = mustIcon(widget.NewIcon(icons.ToggleCheckBoxOutlineBlank))
 	i["RadioChecked"] = mustIcon(widget.NewIcon(icons.ToggleRadioButtonChecked))
