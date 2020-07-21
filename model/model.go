@@ -2,23 +2,23 @@ package model
 
 import (
 	"gioui.org/widget"
-	"net"
 	"time"
 )
 
 type W struct {
-	Id                    int
+	Id                    string
 	Naziv                 string
 	DatumNastanka         time.Time
 	DatumPoslednjePromene time.Time
 	Izmena                *widget.Clickable
 	Brisanje              *widget.Clickable
+	Data                  interface{}
 }
 
-type Client struct {
-	Socket net.Conn
-	data   chan []byte
-}
+//type Client struct {
+//	Socket net.Conn
+//	data   chan []byte
+//}
 
 type WingCalEcommands map[int]WingCalEcommand
 
