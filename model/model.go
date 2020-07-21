@@ -3,7 +3,17 @@ package model
 import (
 	"gioui.org/widget"
 	"net"
+	"time"
 )
+
+type W struct {
+	Id                    int
+	Naziv                 string
+	DatumNastanka         time.Time
+	DatumPoslednjePromene time.Time
+	Izmena                *widget.Clickable
+	Brisanje              *widget.Clickable
+}
 
 type Client struct {
 	Socket net.Conn
@@ -15,12 +25,12 @@ type WingCalEcommands map[int]WingCalEcommand
 type WingCalEcommand struct {
 	Id       string
 	Type     string
-	Name     string      `json:"name"`
-	Enabled  bool        `json:"enabled"`
-	CompType string      `json:"comptype"`
-	SubType  string      `json:"subtype"`
-	Command  interface{} `json:"command"`
-	Data     interface{} `json:"data"`
+	Name     string
+	Enabled  bool
+	CompType string
+	SubType  string
+	Command  interface{}
+	Data     interface{}
 }
 type EditabilnaPoljaVrsteRadova struct {
 	Id        *widget.Editor
@@ -46,5 +56,7 @@ type TipSadrzaja struct {
 	Naziv        string
 	NazivMnozina string
 	Slug         string
+	SlugMnozina  string
+	Struktura    interface{}
 	Link         *widget.Clickable
 }

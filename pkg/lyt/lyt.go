@@ -130,6 +130,10 @@ func formatLayout(gtx layout.Context, f *formatter, widgets []layout.Widget) lay
 		dims = formatFlex(gtx, layout.Horizontal, layout.SpaceBetween, f, widgets)
 	case "vflexb":
 		dims = formatFlex(gtx, layout.Vertical, layout.SpaceBetween, f, widgets)
+	case "hflexe":
+		dims = formatFlex(gtx, layout.Horizontal, layout.SpaceEnd, f, widgets)
+	case "vflexe":
+		dims = formatFlex(gtx, layout.Vertical, layout.SpaceEnd, f, widgets)
 	case "stack":
 		dims = formatStack(gtx, f, widgets)
 	case "hmax":

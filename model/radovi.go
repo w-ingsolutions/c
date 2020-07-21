@@ -5,18 +5,18 @@ import (
 )
 
 type WingVrstaRadova struct {
-	Id                 int                            `json:"id"`
-	Naziv              string                         `json:"naziv"`
-	Opis               string                         `json:"opis"`
-	Obracun            string                         `json:"obracun"`
-	Jedinica           string                         `json:"jedinica"`
-	Cena               float64                        `json:"cena"`
-	Slug               string                         `json:"slug"`
-	Omogucen           bool                           `json:"omogucen"`
-	Baza               bool                           `json:"baza"`
-	Element            bool                           `json:"element"`
-	PodvrsteRadova     map[int]WingVrstaRadova        `json:"podvrsteradova"`
-	NeophodanMaterijal map[int]WingNeophodanMaterijal `json:"neophodanmaterijal"`
+	Id                 int
+	Naziv              string
+	Opis               string
+	Obracun            string
+	Jedinica           string
+	Cena               float64
+	Slug               string
+	Omogucen           bool
+	Baza               bool
+	Element            bool
+	PodvrsteRadova     map[int]WingVrstaRadova
+	NeophodanMaterijal map[int]WingNeophodanMaterijal
 }
 
 type WingIzabraniElementi struct {
@@ -37,7 +37,7 @@ type WingIzabraniElement struct {
 }
 
 type WingCalGrupaRadova struct {
-	Id       string                  `json:"id"`
-	Slug     string                  `json:"slug"`
+	Id       string
+	Slug     string
 	Elementi map[int]WingVrstaRadova `json:"elementi"`
 }
