@@ -50,6 +50,7 @@ type ElementMenu struct {
 	Slug      string
 	Materijal bool
 	Link      *widget.Clickable
+	Icon      *widget.Icon
 }
 
 type TipSadrzaja struct {
