@@ -51,6 +51,7 @@ type ElementMenu struct {
 	Materijal bool
 	Link      *widget.Clickable
 	Icon      *widget.Icon
+	Hash      string
 }
 
 type TipSadrzaja struct {
